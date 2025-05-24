@@ -9,10 +9,6 @@
 
 ---
 
-# 🤖 INSIGHT GENERATOR
-
-_A lightweight, local-first assistant that converts natural-language prompts into **Market Insights** and **Content Ideas** in under three seconds._
-
 ---
 
 ## 📖 Introduction
