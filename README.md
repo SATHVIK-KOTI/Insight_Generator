@@ -117,21 +117,3 @@ Ollama • Llama 3 • FastAPI
 
 Enjoy building with **Insight Generator**! 🎉
 
-````
-
----
-
-## 2. Do these three tiny follow-ups
-
-1. **Add the file `docs/ui_screenshot.png`**  
-   *Upload any screenshot—or delete the image line if you don’t have one yet.*
-
-2. **Commit `.env.example`**  
-   ```env
-   LLAMA_MODEL_PATH=/path/to/llama3.gguf
-   SERPAPI_KEY=replace_me
-````
-
-3. **Add a CI workflow** (`.github/workflows/ci.yml`) *later* to make the build badge go green.
-
-That’s it—README is now paste-ready and everything should look crystal clear.
