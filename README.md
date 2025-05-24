@@ -102,9 +102,7 @@ Insight_Generator/
 ├── .env.example
 ├── models/               # GGUF weights (Git LFS-tracked or ignored)
 ├── frontend/             # React SPA (Bootstrap 5)
-├── docs/
-│   ├── embedded_AI_project.pdf
-│   └── ui_overview.png
+├── docs
 └── tests/
     └── test_llm_handler.py
 ```
