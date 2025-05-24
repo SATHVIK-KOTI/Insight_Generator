@@ -54,14 +54,8 @@ The result is sub-2 s answers on a modern CPU, with zero data leaving your machi
 │ Web-search shim │ ← DuckDuckGo / SerpAPI
 └─────────────────┘
 
-```
-
----
-
-## 🗂️ 3 · Repository layout
 
 ```
-
 Insight\_Generator/
 ├── main.py               # FastAPI entry-point
 ├── llm\_handler.py        # prompt templates + Llama call
@@ -76,10 +70,11 @@ Insight\_Generator/
 
 ````
 
-
 ## 🚀 Quick start (5 min)
 
-```bash
+```
+
+bash
 # prerequisites: git, Python 3.10+, Node 18+, Ollama
 git clone https://github.com/SATHVIK-KOTI/Insight_Generator.git
 cd Insight_Generator
