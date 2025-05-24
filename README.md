@@ -71,9 +71,6 @@ Insight\_Generator/
 ├── .env.example
 ├── models/               # GGUF weights (Git LFS-tracked or ignored)
 ├── frontend/             # React SPA (Vite + Tailwind)
-├── docs/
-│   ├── embedded\_AI\_project.pdf
-│   └── ui\_screenshot.png
 └── tests/
 └── test\_llm\_handler.py
 
