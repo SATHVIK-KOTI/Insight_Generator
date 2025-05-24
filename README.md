@@ -1,14 +1,12 @@
 # 🤖 INSIGHT GENERATOR
 
-> **Real-time market-insight assistant powered by local Llama 3 + lightweight FastAPI backend.**
+> **Real-time market-insight assistant powered by local Llama 3 + FastAPI backend.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![Build Status](https://github.com/SATHVIK-KOTI/Insight_Generator/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SATHVIK-KOTI/Insight_Generator/actions)
 
-> ![UI Screenshot](docs/ui_screenshot.png)
->
-> *Figure 1 – glassmorphic React frontend (dark-mode).*
+![UI Screenshot](docs/ui_screenshot.png)
 
 ---
 
@@ -16,35 +14,34 @@
 
 | What | Why it matters |
 |------|----------------|
-| **Sub-2 s responses on CPU** | GGUF-quantised Llama 3 weights via **Ollama**. |
-| **Market-aware prompts** | Blends live web search with local LLM for up-to-date answers. |
-| **Two output modes** | `Market Insight` (concise) and `Content Ideas` (bullet-style). |
-| **Glassmorphic React UI** | Smooth dark-mode SPA (lives in `/frontend`). |
-| **100 % offline-capable** | After the first search, answers can run fully air-gapped. |
+| **Sub-2 s CPU replies** | GGUF-quantised Llama 3 via **Ollama** |
+| **Market-aware prompts** | Live web search + local LLM |
+| **Two modes** | `Market Insight` (concise) / `Content Ideas` (bullets) |
+| **Glassmorphic React UI** | Dark-mode SPA in `/frontend` |
+| **Offline-capable** | Works air-gapped after first search |
 
 ---
 
-## 🗂️ Repository layout
+## 🗂️ Repo layout
 
-Insight_Generator/
-├── main.py # FastAPI entry-point
-├── llm_handler.py # prompt templates + Llama 3 inference
-├── web_search.py # SerpAPI / DuckDuckGo wrapper
+```
+
+Insight\_Generator/
+├── main.py
+├── llm\_handler.py
+├── web\_search.py
 ├── requirements.txt
-├── models/ # GGUF weights (Git LFS or ignored)
+├── models/               # GGUF weights
 ├── docs/
-│ ├── embedded_AI_project.pdf
-│ └── ui_screenshot.png
+│   ├── embedded\_AI\_project.pdf
+│   └── ui\_screenshot.png
 └── …
 
-yaml
-Copy code
+````
 
 ---
 
 ## 🚀 Quick start
-
-### 1 · Clone & set up Python env
 
 ```bash
 git clone https://github.com/SATHVIK-KOTI/Insight_Generator.git
@@ -53,84 +50,88 @@ cd Insight_Generator
 python -m venv venv
 source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-2 · Pull Llama 3 weights via Ollama
-bash
-Copy code
-# Smallest 8-bit quantised 8-B model (~4 GB)
-ollama run llama3
-Ollama stores weights under ~/.ollama/models/.
-Override with LLAMA_MODEL_PATH in your .env if you keep them elsewhere.
 
-3 · Run the API
-bash
-Copy code
-uvicorn main:app --reload
-Open http://127.0.0.1:8000/docs to explore the Swagger UI.
+ollama run llama3                 # download weights
+uvicorn main:app --reload         # run API
+````
 
-4 · (Optional) launch the React UI
-bash
-Copy code
-cd frontend
-npm i
-npm start
-⚙️ Configuration
-Copy the provided template:
+Visit **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)** for Swagger.
+To launch the React UI:
 
-bash
-Copy code
-cp .env.example .env
-Edit any values:
+```bash
+cd frontend && npm i && npm start
+```
 
-env
-Copy code
-LLAMA_MODEL_PATH=/absolute/path/to/llama3.gguf
-SERPAPI_KEY=your_key_here        # if you opted for SerpAPI
+---
+
+## ⚙️ Configuration
+
+Copy `.env.example` ➜ `.env` and edit:
+
+```env
+LLAMA_MODEL_PATH=/abs/path/llama3.gguf
+SERPAPI_KEY=your_key
 TEMPERATURE=0.7
 MAX_TOKENS=1024
-Everything is auto-loaded by python-dotenv in main.py.
+```
 
-🛠️ Available scripts
-Command	Description
-python -m pytest	Run unit tests (coming soon)
-black .	Format code
-ruff check .	Lint code
+---
 
-🏗️ Roadmap / TODO
- Websocket streaming for token-by-token UI updates
+## 🛠️ Scripts
 
- Dockerfile (multi-stage: backend + frontend)
+| Command            | Purpose        |
+| ------------------ | -------------- |
+| `python -m pytest` | (coming soon)  |
+| `black .`          | code formatter |
+| `ruff check .`     | linter         |
 
- Automated benchmark suite (latency vs model size)
+---
 
- Optional OpenAI fallback when local model confidence < 0.5
+## 🏗️ Roadmap
 
-Track progress on the Projects tab.
+* [ ] Websocket streaming
+* [ ] Dockerfile (backend + frontend)
+* [ ] Benchmark suite
+* [ ] Optional OpenAI fallback
 
-🤝 Contributing
-Fork the repo & create a branch: git checkout -b feature/my-feature
+---
 
-Commit your changes: git commit -m "feat: add my feature"
+## 👥 Contributors
 
-Push to your fork: git push origin feature/my-feature
+| Name     | GitHub                                                     |
+| -------- | ---------------------------------------------------------- |
+| Lokesh   | [@SRILOKESHREDDY-ai](https://github.com/SRILOKESHREDDY-ai) |
+| Prashant | [@Prasanth217](https://github.com/Prasanth217)             |
 
-Open a pull request and fill in the template.
+---
 
-Please run lint + tests before submitting.
+## 📜 License
 
-👥 Contributors
-Name	GitHub
-Lokesh	@SRILOKESHREDDY-ai
-Prashant	@Prasanth217
+MIT – see `LICENSE`.
 
-📜 License
-Distributed under the MIT License.
-See the LICENSE file for details.
+---
 
-🙏 Acknowledgements
-Ollama – friction-less local LLM orchestration
+## 🙏 Acknowledgements
 
-Llama 3 weights by Meta AI
+Ollama • Llama 3 • FastAPI
 
-FastAPI – a gorgeous developer DX
+Enjoy building with **Insight Generator**! 🎉
 
-Enjoy building with INSIGHT GENERATOR! 🎉
+````
+
+---
+
+## 2. Do these three tiny follow-ups
+
+1. **Add the file `docs/ui_screenshot.png`**  
+   *Upload any screenshot—or delete the image line if you don’t have one yet.*
+
+2. **Commit `.env.example`**  
+   ```env
+   LLAMA_MODEL_PATH=/path/to/llama3.gguf
+   SERPAPI_KEY=replace_me
+````
+
+3. **Add a CI workflow** (`.github/workflows/ci.yml`) *later* to make the build badge go green.
+
+That’s it—README is now paste-ready and everything should look crystal clear.
