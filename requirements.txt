@@ -1,0 +1,18 @@
+# Core FastAPI app
+fastapi
+uvicorn
+
+# LLM communication
+httpx
+
+# Environment variable handling
+python-dotenv
+
+# NewsAPI support (HTTP calls)
+requests
+
+# Optional if you're using DuckDuckGo scraping or HTML parsing
+beautifulsoup4
+
+# If using Ollama API locally — no install needed in requirements.txt
+# Just ensure `ollama run llama3` runs outside Python
