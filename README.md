@@ -1,209 +1,88 @@
 # 🤖 INSIGHT GENERATOR
 
-> _Lightning-fast market-insight assistant that runs **locally** on Llama 3, fetches live information when needed, and serves everything through a tidy FastAPI + React stack._
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
-[![Build Status](https://github.com/SATHVIK-KOTI/Insight_Generator/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SATHVIK-KOTI/Insight_Generator/actions)
-[![Open Issues](https://img.shields.io/github/issues/SATHVIK-KOTI/Insight_Generator)](https://github.com/SATHVIK-KOTI/Insight_Generator/issues)
+_A lightweight, local-first assistant that converts natural-language prompts into **market insights** and **content ideas** inside a chat-style interface._
 
 ---
 
-## 📖 Introduction
-Insight Generator is a **local-first market-insight assistant**.  
-It pairs a quantised Llama 3 model (running on your laptop via Ollama) with a FastAPI backend and a sleek React UI.  
-The goal: deliver sub-2-second, privacy-friendly answers that blend fresh web data with powerful language-model reasoning.
+## 📖 Introduction  
+
+**Generative AI** is reshaping how marketers, analysts and startups create copy and interpret market data. Most cloud-based tools are costly, generic and raise privacy concerns.  
+INSIGHT GENERATOR addresses these gaps with a **React + Bootstrap 5** frontend, a **FastAPI** backend and a **local LLM (LLaMA 3 via Ollama)** that runs entirely on CPU hardware. It produces structured results in **under three seconds** and enables a dual-phase workflow: rapid local ideation followed by polishing in Jasper AI. :contentReference[oaicite:0]{index=0}
 
 ---
 
-## 🌟 1 · Why this project exists
+## 🌐 System architecture  
 
-Content creators, marketers, and researchers often need **fresh insights** (“What’s trending in AI hiring right now?”) and **ready-to-post ideas** (tweets, LinkedIn hooks, blog titles).  
-Cloud LLMs are powerful but:
+*Three-layer design* (Fig. 1 in the paper):  
 
-* ✖️ **Bandwidth & privacy** – shipping your data to the cloud is slow and sometimes forbidden.  
-* ✖️ **Cost** – tokens add up.  
-* ✖️ **Latency** – 4-10 s round-trip pauses creativity.
+1. **Frontend** – React UI with dark mode, chat history, copy-to-clipboard and a glassmorphic layout.  
+2. **Backend** – FastAPI server that forwards prompts to a local LLM and returns **Market Insights** + **Content Ideas**.  
+3. **Refinement layer** – manual hand-off of copy-ready text to Jasper AI for tone, SEO and publication. :contentReference[oaicite:1]{index=1}
 
-**Insight Generator** solves that by:
+#### Execution flow  
 
-1. Running a _quantised_ Llama 3 model **inside your laptop** (thanks Ollama).  
-2. Triggering a quick web search only when the prompt demands new facts.  
-3. Returning two flavours of output: **Market Insight** (TL;DR paragraph) and **Content Ideas** (bullet list).  
-
-The result is sub-2 s answers on a modern CPU, with zero data leaving your machine after the first search.
-
----
-
-## 🏗️ 2 · High-level architecture
-
-```
-
-┌──────────────┐      HTTP      ┌─────────────┐
-│ React UI     │◀──────────────▶│ FastAPI app │
-│ (frontend/)  │                │  (main.py)  │
-└──────────────┘                └────┬────────┘
-│
-▼
-┌───────────────────────┐
-│ Llama-3-8B-GGUF model │ ← Ollama runtime
-└───────────────────────┘
-▲
-│
-┌─────────────────┐
-│ Web-search shim │ ← DuckDuckGo / SerpAPI
-└─────────────────┘
-
-
-```
-Insight\_Generator/
-├── main.py               # FastAPI entry-point
-├── llm\_handler.py        # prompt templates + Llama call
-├── web\_search.py         # search wrapper
-├── prompts.py            # centralised prompt strings
-├── requirements.txt
-├── .env.example
-├── models/               # GGUF weights (Git LFS-tracked or ignored)
-├── frontend/             # React SPA (Vite + Tailwind)
-└── tests/
-└── test\_llm\_handler.py
-
-````
-
-## 🚀 Quick start (5 min)
-
-```
-
-bash
-# prerequisites: git, Python 3.10+, Node 18+, Ollama
-git clone https://github.com/SATHVIK-KOTI/Insight_Generator.git
-cd Insight_Generator
-
-python -m venv venv && source venv/bin/activate      # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-
-# download a local Llama 3 model (~4 GB)
-ollama run llama3
-
-cp .env.example .env     # edit LLAMA_MODEL_PATH if needed
-
-# backend
-uvicorn main:app --reload                # http://127.0.0.1:8000/docs
-
-# optional frontend
-cd frontend && npm i && npm start
-
+1. User enters a topic (e.g. “AI in Retail”).  
+2. Frontend POSTs the prompt to the backend.  
+3. Backend calls Ollama-hosted LLaMA 3 with a templated prompt.  
+4. Response is split into _Insights_ and _Content Ideas_.  
+5. User optionally pastes the result into Jasper AI for further editing. :contentReference[oaicite:2]{index=2}
 
 ---
 
-## ⚙️ 5 · Configuration keys (`.env`)
+## ✨ Key features  
 
-| Key                | Default                       | Purpose                                               |
-| ------------------ | ----------------------------- | ----------------------------------------------------- |
-| `LLAMA_MODEL_PATH` | \~/.ollama/models/llama3.gguf | Path to GGUF file                                     |
-| `SERPAPI_KEY`      | ---------                     | If set, web\_search uses SerpAPI; else DuckDuckGo API |
-| `TEMPERATURE`      | `0.7`                         | LLM creativity                                        |
-| `MAX_TOKENS`       | `1024`                        | Output length cap                                     |
-
----
-
-## 🔧 6 · Common dev tasks
-
-| Task                    | Command              |
-| ----------------------- | -------------------- |
-| Format code             | `black .`            |
-| Lint                    | `ruff check .`       |
-| Run tests               | `pytest`             |
-| Pre-commit hook install | `pre-commit install` |
+| Feature | Paper reference |
+|---------|-----------------|
+| Dark-mode, glassmorphic UI | Sec. V-A, V-D |
+| Chat history stored in `localStorage` | Sec. V-B |
+| Copy-to-clipboard buttons for Jasper workflow | Sec. V-C |
+| Runs fully **offline** on standard Windows-11 i5/8 GB laptop | Sec. IV-A |
+| Average latency **< 3 s** (2.8 s measured) | Table II & Sec. VI-A |
+| Structured output: **Market Insights** + **Content Ideas** | Sec. III-C / Fig. 3 |
 
 ---
 
-## 7. 📊 Model comparison 
+## 🧩 Model selection (Table I)
 
-## | Model            | Params | Avg. latency | Local-ready | Quality  |
-| ---------------- | ------ | ------------ | ----------- | -------- |
-| **Llama 3 (8B)** | 13 GB  | **1.5 s**    | ✔︎          | High     |
-| Mistral (7B)     | 12 GB  | 1.6 s        | ✔︎          | High     |
-| GPT-J (6B)       | 11 GB  | 2.3 s        | ✔︎          | Moderate |
-| Falcon (7B)      | 13 GB  | 2.0 s        | ✔︎          | Moderate |
-| GPT-3.5 API      | Cloud  | 0.5 s        | ✖︎          | High     |
+| Model            | Size | Avg. latency | Local-ready | Output quality |
+|------------------|------|--------------|-------------|----------------|
+| **LLaMA 3 (8 B)**| 13 GB| **1.5 s**    | ✔︎ | High |
+| Mistral (7 B)    | 12 GB| 1.6 s        | ✔︎ | High |
+| GPT-J (6 B)      | 11 GB| 2.3 s        | ✔︎ | Moderate |
+| Falcon (7 B)     | 13 GB| 2.0 s        | ✔︎ | Moderate |
+| GPT-3.5 API      | Cloud| 0.5 s        | ✖︎ | High | :contentReference[oaicite:3]{index=3}
 
----
-
-## 🗺️ 8 · Roadmap
-
-* [ ] Websocket streaming (token-by-token)
-* [ ] Docker Compose (backend + frontend)
-* [ ] Automatic latency benchmarks CI job
-* [ ] Optional OpenAI fallback if `confidence < 0.5`
-* [ ] Plug-in system for extra data sources (RSS, Twitter, SEC filings)
-
-Track items in [https://github.com/SATHVIK-KOTI/Insight\_Generator/projects](https://github.com/SATHVIK-KOTI/Insight_Generator/projects).
+_LLaMA 3 was chosen for its balance of speed, quality and CPU-only execution._ :contentReference[oaicite:4]{index=4}
 
 ---
 
-## 🤝 9 · Contributing
+## 💻 Development environment  
 
-1. **Fork** → `git checkout -b feature/my-change`
-2. Make changes; run `black . && ruff check . && pytest`
-3. **Commit** conventional style: `feat:`, `fix:`, `docs:` …
-4. **Push** & open a **PR** – fill out the template.
-5. One approval + green CI = merge.
-
-Respect the [Code of Conduct](CODE_OF_CONDUCT.md).
+* Tested on **Windows 11**, Intel Core i5, **8 GB RAM**, no GPU.  
+* Backend: **Python 3.11** + FastAPI.  
+* Frontend: **React + Bootstrap 5**. :contentReference[oaicite:5]{index=5}
 
 ---
 
-## 👥 10 · Core contributors
+## 🔮 Future work  
 
-| Name                 | GitHub                                                     |
-| -------------------- | ---------------------------------------------------------- |
-| Lokesh               | [@SRILOKESHREDDY-ai](https://github.com/SRILOKESHREDDY-ai) |
-| Prashant             | [@Prasanth217](https://github.com/Prasanth217)             |
-
----
-
-## ❓ 11 · FAQ & Troubleshooting
-
-<details>
-<summary>“`ModuleNotFoundError: llama_cpp`”</summary>
-
-You skipped `pip install -r requirements.txt` **or** the install failed to compile
-`llama-cpp-python`. On Linux, make sure you have a C++ compiler (`build-essential`).
-
-</details>
-
-<details>
-<summary>“Badge shows ‘no status’”</summary>
-
-GitHub only generates a status badge after you add a workflow file.<br>
-Copy `ci.yml.sample` to `.github/workflows/ci.yml` or use your own.
-
-</details>
-
-<details>
-<summary>Can I load a 13B model?</summary>
-
-Yes – adjust `ollama run llama3:13b` and bump `LLAMA_MODEL_PATH`.
-Expect \~18 GB RAM and \~3-4 s latency on high-end CPUs.
-
-</details>
+* GPU or further quantisation to support larger models (e.g., LLaMA 3-70B).  
+* Automate Jasper AI integration through their API.  
+* Multi-user profiles, customizable prompt templates, analytics dashboard.  
+* Mobile or Electron desktop build. :contentReference[oaicite:6]{index=6}
 
 ---
 
-## 📜 12 · License
+## 👥 Contributors  
 
-This project is released under the **MIT License** – see [`LICENSE`](LICENSE).
+| Name | Affiliation | Email |
+|------|-------------|-------|
+| **Sri Lokesh Reddy Ankireddypalli** | MSc Robotics & Embedded AI, Maynooth Univ. | sri.ankireddypalli.2025@mumail.ie |
+| **Prashanth Gujjula** | MSc Robotics & Embedded AI, Maynooth Univ. | prasanth.gujjula.2025@mumail.ie |
+| **Sathvik Koti** | MSc Robotics & Embedded AI, Maynooth Univ. | sathvik.koti.2025@mumail.ie | :contentReference[oaicite:7]{index=7}
 
 ---
 
-## 🙏 13 · Acknowledgements
+## 📄 References  
 
-* **Meta AI** for releasing Llama 3 weights
-* **Ollama** for one-command local LLM serving
-* **FastAPI** for a silky dev experience
-
-* Everyone who opens issues or PRs – ✨ thank you!
-
-> *Made with ❤️ and caffeine by the Insight Generator team. Reach us at `<sathvikk35@gmail.com>` if you build something cool on top!*
-
+See the reference list in the accompanying PDF for all cited works, including OpenAI ChatGPT [1], Jasper AI [2], FastAPI [3], Ollama [4] and LLaMA 3 [5]. :contentReference[oaicite:8]{index=8}
