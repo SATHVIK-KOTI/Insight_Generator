@@ -125,6 +125,15 @@ Please run *lint + tests* before submitting.
 
 ---
 
+
+## 👥 Contributors
+
+| Name | GitHub |
+|------|--------|
+| Lokesh | [@SRILOKESHREDDY-ai](https://github.com/SRILOKESHREDDY-ai) |
+| Prashant | [@Prasanth217](https://github.com/Prasanth217) |
+
+
 ## 📜 License
 
 Distributed under the **MIT License**.
