@@ -9,6 +9,13 @@
 
 ---
 
+## 📖 Introduction
+Insight Generator is a **local-first market-insight assistant**.  
+It pairs a quantised Llama 3 model (running on your laptop via Ollama) with a FastAPI backend and a sleek React UI.  
+The goal: deliver sub-2-second, privacy-friendly answers that blend fresh web data with powerful language-model reasoning.
+
+
+
 ## 🌟 1 · Why this project exists
 
 Content creators, marketers, and researchers often need **fresh insights** (“What’s trending in AI hiring right now?”) and **ready-to-post ideas** (tweets, LinkedIn hooks, blog titles).  
