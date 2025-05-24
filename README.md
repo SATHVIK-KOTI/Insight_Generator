@@ -29,6 +29,7 @@
 Insight\_Generator/
 ├── main.py
 ├── llm\_handler.py
+├── prompts.py
 ├── web\_search.py
 ├── requirements.txt
 ├── models/               # GGUF weights
