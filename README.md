@@ -9,8 +9,6 @@
 
 ---
 
----
-
 ## 📖 Introduction
 
 Most cloud LLM tools are costly, generic and raise privacy concerns. INSIGHT GENERATOR combines:  
