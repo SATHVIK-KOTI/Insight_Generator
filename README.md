@@ -168,7 +168,6 @@ Respect the [Code of Conduct](CODE_OF_CONDUCT.md).
 | -------------------- | ---------------------------------------------------------- |
 | Lokesh               | [@SRILOKESHREDDY-ai](https://github.com/SRILOKESHREDDY-ai) |
 | Prashant             | [@Prasanth217](https://github.com/Prasanth217)             |
-| Sathvik (maintainer) | [@SATHVIK-KOTI](https://github.com/SATHVIK-KOTI)           |
 
 ---
 
